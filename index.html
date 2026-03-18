@@ -5,10 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>For Ayen</title>
     
-    <!-- Bootstrap 5 CSS -->
+    <link rel="preload" as="image" href="https://images.unsplash.com/photo-1597848212624-a19eb35e26f5?q=80&w=2000&auto=format&fit=crop">
+
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     
-    <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Lora:ital,wght@0,400;0,500;1,400&family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet">
@@ -29,6 +29,7 @@
             color: var(--text-dark);
             overflow-x: hidden;
             background-color: #fcf9f2;
+            scroll-behavior: smooth;
         }
 
         /* Fixed Background Image */
@@ -50,7 +51,7 @@
             left: 0;
             width: 100vw;
             height: 100vh;
-            background: linear-gradient(to bottom, rgba(255, 252, 248, 0.5), rgba(255, 248, 235, 0.85));
+            background: linear-gradient(to bottom, rgba(255, 252, 248, 0.6), rgba(255, 248, 235, 0.9));
             z-index: -2;
         }
 
@@ -64,7 +65,7 @@
             background: rgba(255, 252, 248, 0.95);
             backdrop-filter: blur(15px);
             -webkit-backdrop-filter: blur(15px);
-            z-index: 99999; /* Forced to the absolute top */
+            z-index: 99999;
             display: flex;
             flex-direction: column;
             justify-content: center;
@@ -76,7 +77,7 @@
             font-family: 'Playfair Display', serif;
             font-size: 2.5rem;
             color: var(--text-dark);
-            margin-bottom: 2rem;
+            margin-bottom: 2.5rem;
             opacity: 0;
             animation: fadeIn 2s forwards 0.5s;
         }
@@ -94,11 +95,10 @@
             cursor: pointer;
             transition: all 0.3s ease;
             opacity: 0;
-            animation: fadeIn 2s forwards 1.5s;
+            animation: fadeIn 2s forwards 1.5s, pulse 2.5s infinite 3.5s;
             position: relative;
-            z-index: 100000; /* Extra safe click layer */
-            pointer-events: auto;
-            touch-action: manipulation; /* Fixes mobile click issues */
+            z-index: 100000;
+            touch-action: manipulation;
         }
 
         .open-btn:active, .open-btn:hover {
@@ -106,21 +106,22 @@
             color: #fff;
             box-shadow: 0 10px 20px rgba(212, 175, 55, 0.3);
             transform: translateY(-2px);
+            animation: none; /* Stop pulsing on hover */
         }
 
         /* --- MAIN CONTENT --- */
         #main-content {
-            display: none; /* Initially hidden physically */
+            display: none;
             opacity: 0;
             transition: opacity 1.5s ease-in-out;
             padding-bottom: 5rem;
         }
 
         .glass-card {
-            background: rgba(255, 255, 255, 0.4);
+            background: rgba(255, 255, 255, 0.65); /* Increased opacity for better readability */
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.7);
+            border: 1px solid rgba(255, 255, 255, 0.8);
             border-radius: 24px;
             padding: 5rem 3rem;
             margin: 4rem auto;
@@ -131,6 +132,7 @@
         .hero-section {
             text-align: center;
             padding-bottom: 4rem;
+            position: relative;
         }
 
         .hero-title {
@@ -150,6 +152,22 @@
             letter-spacing: 1px;
         }
 
+        /* Scroll Down Indicator */
+        .scroll-indicator {
+            position: absolute;
+            bottom: -1.5rem;
+            left: 50%;
+            transform: translateX(-50%);
+            opacity: 0.6;
+            animation: bounce 2s infinite;
+        }
+
+        .scroll-indicator svg {
+            width: 24px;
+            height: 24px;
+            fill: var(--text-muted);
+        }
+
         .poem-container {
             font-family: 'Lora', serif;
         }
@@ -160,8 +178,9 @@
             text-align: center;
             margin-bottom: 4.5rem;
             opacity: 0;
-            transform: translateY(40px);
-            transition: opacity 1.5s cubic-bezier(0.25, 0.46, 0.45, 0.94), transform 1.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            transform: translateY(30px); /* Slightly reduced travel distance */
+            transition: opacity 1s cubic-bezier(0.25, 0.46, 0.45, 0.94), transform 1s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            will-change: transform, opacity; /* GPU acceleration for smooth scrolling */
         }
 
         .stanza.visible {
@@ -175,7 +194,7 @@
             margin: 0 auto 4.5rem auto;
             display: block;
             opacity: 0.6;
-            transition: opacity 1.5s ease;
+            transition: opacity 1s ease;
         }
 
         .floral-separator.visible {
@@ -191,7 +210,7 @@
         }
         .dandelion-svg { stroke: var(--text-muted); }
 
-        /* --- FINAL STATIC NOTE (Safe & Beautiful) --- */
+        /* --- FINAL STATIC NOTE --- */
         .final-note {
             margin-top: 2rem;
             padding-top: 3.5rem;
@@ -209,10 +228,10 @@
             width: 55px;
             height: 55px;
             border-radius: 50%;
-            background: rgba(255, 255, 255, 0.8);
+            background: rgba(255, 255, 255, 0.85);
             backdrop-filter: blur(10px);
             border: 1px solid rgba(255,255,255,0.9);
-            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
             display: flex;
             justify-content: center;
             align-items: center;
@@ -242,9 +261,23 @@
             box-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
             z-index: 0;
             animation: floatUp linear forwards, sway ease-in-out infinite alternate;
+            will-change: transform, top, opacity;
         }
 
         @keyframes fadeIn { to { opacity: 1; } }
+        
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(212, 175, 55, 0.4); }
+            70% { box-shadow: 0 0 0 15px rgba(212, 175, 55, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(212, 175, 55, 0); }
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% { transform: translateY(0) translateX(-50%); }
+            40% { transform: translateY(-10px) translateX(-50%); }
+            60% { transform: translateY(-5px) translateX(-50%); }
+        }
+
         @keyframes floatUp {
             0% { top: 110vh; opacity: 0; }
             10% { opacity: 0.8; }
@@ -253,15 +286,15 @@
         }
         @keyframes sway {
             0% { transform: translateX(0px); }
-            100% { transform: translateX(30px); }
+            100% { transform: translateX(35px); }
         }
 
         @media (max-width: 768px) {
             .hero-title { font-size: 2.8rem; }
             .stanza { font-size: 1.15rem; margin-bottom: 3.5rem; line-height: 2.2; }
             .glass-card { margin: 1.5rem; padding: 3rem 1.5rem; border-radius: 16px; }
-            .welcome-text { font-size: 2rem; }
-            .open-btn { padding: 15px 50px; } /* Bigger touch area on mobile */
+            .welcome-text { font-size: 2rem; text-align: center; padding: 0 1rem; }
+            .open-btn { padding: 15px 50px; }
         }
     </style>
 </head>
@@ -300,6 +333,12 @@
                     </svg>
                     <h1 class="hero-title">For Ayen</h1>
                     <p class="hero-subtitle">A confession, an apology, and a promise.</p>
+                    
+                    <div class="scroll-indicator">
+                        <svg viewBox="0 0 24 24">
+                            <path d="M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6-6-6 1.41-1.41z"/>
+                        </svg>
+                    </div>
                 </header>
 
                 <main class="poem-container">
@@ -395,7 +434,6 @@
                         </p>
                     </div>
 
-                    <!-- Clean, Static Final Message (No buttons to click) -->
                     <div class="stanza fade-in-section final-note mb-0">
                         <p>"I am truly sorry for shutting down and not being there when you needed me the most. I meant every word of this poem. Take all the time you need. I'll be right here whenever you're ready to talk."</p>
                     </div>
@@ -405,12 +443,10 @@
         </div>
     </div>
 
-    <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
     
     <script>
         document.addEventListener("DOMContentLoaded", function() {
-            
             const welcomeScreen = document.getElementById('welcome-screen');
             const mainContent = document.getElementById('main-content');
             const openBtn = document.getElementById('openBtn');
@@ -422,15 +458,13 @@
             let isPlaying = false;
             audio.volume = 0.5;
 
-            // Robust function to start the experience
             function startExperience() {
                 welcomeScreen.style.opacity = '0';
                 
                 setTimeout(() => {
-                    welcomeScreen.style.display = 'none'; // Completely removed so it doesn't block clicks
-                    mainContent.style.display = 'block'; // Brought back physically
+                    welcomeScreen.style.display = 'none'; 
+                    mainContent.style.display = 'block'; 
                     
-                    // Small delay to allow CSS transitions to trigger
                     setTimeout(() => {
                         mainContent.style.opacity = '1';
                         initScrollObserver();
@@ -445,7 +479,7 @@
                             playIcon.style.display = "none";
                             pauseIcon.style.display = "block";
                         }).catch(error => {
-                            console.log("Audio play prevented");
+                            console.log("Audio play prevented - User needs to interact more");
                             isPlaying = false;
                             playIcon.style.display = "block";
                             pauseIcon.style.display = "none";
@@ -456,14 +490,8 @@
                 }
             }
 
-            // Bind to BOTH click and touchstart for absolute mobile safety
             openBtn.addEventListener('click', startExperience);
-            openBtn.addEventListener('touchstart', function(e) {
-                e.preventDefault(); // Prevents ghost clicks
-                startExperience();
-            }, { passive: false });
 
-            // Manual Audio Toggle
             musicBtn.addEventListener("click", function() {
                 if (isPlaying) {
                     audio.pause();
@@ -481,7 +509,6 @@
                 isPlaying = !isPlaying;
             });
 
-            // Fade-in Scroll Animation
             function initScrollObserver() {
                 const observerOptions = {
                     root: null,
@@ -510,10 +537,15 @@
             }
         });
 
-        // Floating Dandelion Seeds Animation
+        // Performance Optimized Dandelion Seeds Animation
+        const MAX_SEEDS = 25; // Limit seeds so the browser doesn't get overloaded
+
         function createSeed() {
             const main = document.getElementById('main-content');
             if (!main || main.style.opacity === '0') return;
+
+            const currentSeeds = document.querySelectorAll('.seed').length;
+            if (currentSeeds >= MAX_SEEDS) return;
 
             const seed = document.createElement('div');
             seed.classList.add('seed');
@@ -530,15 +562,14 @@
             
             document.body.appendChild(seed);
 
+            // Clean up element after animation finishes
             setTimeout(() => {
                 if (seed && seed.parentNode) seed.remove();
             }, duration * 1000);
         }
 
-        setInterval(createSeed, 1200);
+        setInterval(createSeed, 1500); // Slightly slowed down the spawn rate for elegance
     </script>
 </body>
 </html>
-
-
 
