@@ -8,7 +8,7 @@
     <!-- Bootstrap 5 CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     
-    <!-- Google Fonts: Playfair Display for Titles, Lora for Poem, Montserrat for UI -->
+    <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Lora:ital,wght@0,400;0,500;1,400&family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet">
@@ -24,11 +24,11 @@
             margin: 0;
             padding: 0;
             width: 100%;
+            height: 100%;
             font-family: 'Montserrat', sans-serif;
             color: var(--text-dark);
-            background-color: #fcf9f2;
             overflow-x: hidden;
-            scroll-behavior: smooth;
+            background-color: #fcf9f2;
         }
 
         /* Fixed Background Image */
@@ -41,9 +41,9 @@
             background: url('https://images.unsplash.com/photo-1597848212624-a19eb35e26f5?q=80&w=2000&auto=format&fit=crop') no-repeat center center fixed;
             background-size: cover;
             z-index: -3;
+            transform: scale(1.05); 
         }
 
-        /* Overlay to soften the image */
         .background-overlay {
             position: fixed;
             top: 0;
@@ -54,56 +54,68 @@
             z-index: -2;
         }
 
-        /* Welcome Screen */
+        /* --- ENTRY SCREEN (WELCOME) --- */
         #welcome-screen {
             position: fixed;
             top: 0;
             left: 0;
-            width: 100%;
-            height: 100%;
+            width: 100vw;
+            height: 100vh;
             background: rgba(255, 252, 248, 0.95);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            z-index: 99999; /* Forced to the absolute top */
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            z-index: 50;
-            opacity: 1;
-            transition: opacity 1s ease;
-        }
-
-        #welcome-screen.hidden {
-            opacity: 0;
-            pointer-events: none;
+            transition: opacity 0.8s ease-in-out;
         }
 
         .welcome-text {
             font-family: 'Playfair Display', serif;
-            font-size: 3rem;
+            font-size: 2.5rem;
             color: var(--text-dark);
             margin-bottom: 2rem;
-            letter-spacing: 2px;
+            opacity: 0;
+            animation: fadeIn 2s forwards 0.5s;
         }
 
         .open-btn {
-            padding: 15px 40px;
-            font-size: 1.1rem;
-            background: rgba(212, 175, 55, 0.8);
-            color: white;
-            border: none;
+            background: transparent;
+            border: 1px solid var(--primary-gold);
+            color: var(--text-dark);
+            padding: 15px 45px;
             border-radius: 50px;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1.1rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
             cursor: pointer;
             transition: all 0.3s ease;
-            font-family: 'Montserrat', sans-serif;
-            font-weight: 500;
+            opacity: 0;
+            animation: fadeIn 2s forwards 1.5s;
+            position: relative;
+            z-index: 100000; /* Extra safe click layer */
+            pointer-events: auto;
+            touch-action: manipulation; /* Fixes mobile click issues */
         }
 
-        .open-btn:hover {
-            background: rgba(212, 175, 55, 1);
+        .open-btn:active, .open-btn:hover {
+            background: var(--primary-gold);
+            color: #fff;
+            box-shadow: 0 10px 20px rgba(212, 175, 55, 0.3);
             transform: translateY(-2px);
-            box-shadow: 0 10px 25px rgba(212, 175, 55, 0.3);
         }
 
-        /* Main Glass Card Container */
+        /* --- MAIN CONTENT --- */
+        #main-content {
+            display: none; /* Initially hidden physically */
+            opacity: 0;
+            transition: opacity 1.5s ease-in-out;
+            padding-bottom: 5rem;
+        }
+
         .glass-card {
             background: rgba(255, 255, 255, 0.4);
             backdrop-filter: blur(20px);
@@ -113,20 +125,12 @@
             padding: 5rem 3rem;
             margin: 4rem auto;
             max-width: 750px;
-            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.05), inset 0 0 0 1px rgba(255, 255, 255, 0.5);
-            position: relative;
-            z-index: 1;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.05), inset 0 0 0 1px rgba(255,255,255,0.5);
         }
 
         .hero-section {
             text-align: center;
             padding-bottom: 4rem;
-            opacity: 0;
-            transition: opacity 1.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-        }
-
-        .hero-section.visible {
-            opacity: 1;
         }
 
         .hero-title {
@@ -165,7 +169,6 @@
             transform: translateY(0);
         }
 
-        /* Decorative Separators */
         .floral-separator {
             width: 45px;
             height: 45px;
@@ -186,12 +189,9 @@
             stroke-linecap: round;
             stroke-linejoin: round;
         }
+        .dandelion-svg { stroke: var(--text-muted); }
 
-        .dandelion-svg {
-            stroke: var(--text-muted);
-        }
-
-        /* Final Static Note */
+        /* --- FINAL STATIC NOTE (Safe & Beautiful) --- */
         .final-note {
             margin-top: 2rem;
             padding-top: 3.5rem;
@@ -202,7 +202,6 @@
             line-height: 1.9;
         }
 
-        /* Music Button */
         .music-btn {
             position: fixed;
             bottom: 30px;
@@ -210,31 +209,30 @@
             width: 55px;
             height: 55px;
             border-radius: 50%;
-            background: rgba(255, 255, 255, 0.7);
+            background: rgba(255, 255, 255, 0.8);
             backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.9);
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            border: 1px solid rgba(255,255,255,0.9);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
             display: flex;
             justify-content: center;
             align-items: center;
             cursor: pointer;
-            z-index: 100;
+            z-index: 1000;
             transition: all 0.3s ease;
         }
 
         .music-btn:hover {
             transform: scale(1.05);
-            background: rgba(255, 255, 255, 0.95);
+            background: rgba(255, 255, 255, 1);
         }
 
         .music-btn svg {
             width: 22px;
             height: 22px;
             fill: var(--text-dark);
-            transition: all 0.3s ease;
         }
 
-        /* Floating Dandelion Seeds */
+        /* Dandelion Seeds */
         .seed {
             position: fixed;
             bottom: -20px;
@@ -246,71 +244,54 @@
             animation: floatUp linear forwards, sway ease-in-out infinite alternate;
         }
 
+        @keyframes fadeIn { to { opacity: 1; } }
         @keyframes floatUp {
             0% { top: 110vh; opacity: 0; }
             10% { opacity: 0.8; }
             90% { opacity: 0.6; }
             100% { top: -10vh; opacity: 0; }
         }
-
         @keyframes sway {
             0% { transform: translateX(0px); }
             100% { transform: translateX(30px); }
         }
 
-        /* Mobile Adjustments */
         @media (max-width: 768px) {
-            .hero-title { 
-                font-size: 2.8rem; 
-            }
-            .stanza { 
-                font-size: 1.15rem; 
-                margin-bottom: 3.5rem; 
-                line-height: 2.2; 
-            }
-            .glass-card { 
-                margin: 1.5rem; 
-                padding: 3rem 1.5rem; 
-                border-radius: 16px; 
-            }
-            .welcome-text { 
-                font-size: 2rem; 
-            }
+            .hero-title { font-size: 2.8rem; }
+            .stanza { font-size: 1.15rem; margin-bottom: 3.5rem; line-height: 2.2; }
+            .glass-card { margin: 1.5rem; padding: 3rem 1.5rem; border-radius: 16px; }
+            .welcome-text { font-size: 2rem; }
+            .open-btn { padding: 15px 50px; } /* Bigger touch area on mobile */
         }
     </style>
 </head>
 <body>
 
-    <!-- Audio Player -->
     <audio id="bg-music" loop>
         <source src="song.mp3" type="audio/mpeg">
     </audio>
 
-    <!-- Welcome Screen -->
     <div id="welcome-screen">
         <div class="welcome-text">A message for Ayen</div>
         <button class="open-btn" id="openBtn">Open</button>
     </div>
 
-    <!-- Backgrounds -->
     <div class="background-wrapper"></div>
     <div class="background-overlay"></div>
 
-    <!-- Main Content -->
     <div id="main-content">
         <div class="music-btn" id="musicToggle" title="Toggle Music">
             <svg id="playIcon" viewBox="0 0 24 24" style="display: none;">
-                <path d="M8 5v14l11-7z" fill="currentColor"/>
+                <path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z"/>
             </svg>
             <svg id="pauseIcon" viewBox="0 0 24 24">
-                <path d="M6 4h4v16H6V4zm8 0h4v16h-4V4z" fill="currentColor"/>
+                <path d="M16.5 12c0-1.77-1.02-3.29-2.5-4.03v2.21l2.45 2.45c.03-.2.05-.41.05-.63zm2.5 0c0 .94-.2 1.82-.54 2.64l1.51 1.51C20.63 14.91 21 13.5 21 12c0-4.28-2.99-7.86-7-8.77v2.06c2.89.86 5 3.54 5 6.71zM4.27 3L3 4.27 7.73 9H3v6h4l5 5v-6.73l4.25 4.25c-.67.52-1.42.93-2.25 1.18v2.06c1.38-.31 2.63-.95 3.69-1.81L19.73 21 21 19.73l-9-9L4.27 3zM12 4L9.91 6.09 12 8.18V4z"/>
             </svg>
         </div>
 
         <div class="container position-relative" style="z-index: 1;">
             <div class="glass-card">
                 
-                <!-- Header -->
                 <header class="hero-section fade-in-section">
                     <svg class="floral-separator mb-4" viewBox="0 0 24 24" style="width: 50px; height: 50px;">
                         <circle cx="12" cy="12" r="3" class="sunflower-svg"/>
@@ -321,7 +302,6 @@
                     <p class="hero-subtitle">A confession, an apology, and a promise.</p>
                 </header>
 
-                <!-- Poem Content -->
                 <main class="poem-container">
                     
                     <div class="stanza fade-in-section">
@@ -415,9 +395,9 @@
                         </p>
                     </div>
 
-                    <!-- Final Message -->
+                    <!-- Clean, Static Final Message (No buttons to click) -->
                     <div class="stanza fade-in-section final-note mb-0">
-                        <p>I am truly sorry for shutting down and not being there when you needed me the most. I meant every word of this poem. Take all the time you need. I'll be right here whenever you're ready.</p>
+                        <p>"I am truly sorry for shutting down and not being there when you needed me the most. I meant every word of this poem. Take all the time you need. I'll be right here whenever you're ready to talk."</p>
                     </div>
 
                 </main>
@@ -442,30 +422,46 @@
             let isPlaying = false;
             audio.volume = 0.5;
 
-            // Handle Welcome Screen Click
-            openBtn.addEventListener('click', () => {
+            // Robust function to start the experience
+            function startExperience() {
                 welcomeScreen.style.opacity = '0';
                 
                 setTimeout(() => {
-                    welcomeScreen.style.display = 'none'; 
-                    mainContent.style.visibility = 'visible';
-                    mainContent.style.opacity = '1';
-                    initScrollObserver();
-                }, 1000);
+                    welcomeScreen.style.display = 'none'; // Completely removed so it doesn't block clicks
+                    mainContent.style.display = 'block'; // Brought back physically
+                    
+                    // Small delay to allow CSS transitions to trigger
+                    setTimeout(() => {
+                        mainContent.style.opacity = '1';
+                        initScrollObserver();
+                    }, 50);
+                }, 800);
 
-                let playPromise = audio.play();
-                if (playPromise !== undefined) {
-                    playPromise.then(_ => {
-                        isPlaying = true;
-                        playIcon.style.display = "none";
-                        pauseIcon.style.display = "block";
-                    }).catch(error => {
-                        isPlaying = false;
-                        playIcon.style.display = "block";
-                        pauseIcon.style.display = "none";
-                    });
+                try {
+                    let playPromise = audio.play();
+                    if (playPromise !== undefined) {
+                        playPromise.then(_ => {
+                            isPlaying = true;
+                            playIcon.style.display = "none";
+                            pauseIcon.style.display = "block";
+                        }).catch(error => {
+                            console.log("Audio play prevented");
+                            isPlaying = false;
+                            playIcon.style.display = "block";
+                            pauseIcon.style.display = "none";
+                        });
+                    }
+                } catch(e) {
+                    console.log("Audio failed", e);
                 }
-            });
+            }
+
+            // Bind to BOTH click and touchstart for absolute mobile safety
+            openBtn.addEventListener('click', startExperience);
+            openBtn.addEventListener('touchstart', function(e) {
+                e.preventDefault(); // Prevents ghost clicks
+                startExperience();
+            }, { passive: false });
 
             // Manual Audio Toggle
             musicBtn.addEventListener("click", function() {
@@ -508,18 +504,41 @@
                 });
                 
                 setTimeout(() => {
-                    document.querySelector('.hero-section').classList.add('visible');
+                    const hero = document.querySelector('.hero-section');
+                    if (hero) hero.classList.add('visible');
                 }, 400);
             }
         });
 
         // Floating Dandelion Seeds Animation
         function createSeed() {
-            if (document.getElementById('main-content').style.visibility === 'hidden') return;
+            const main = document.getElementById('main-content');
+            if (!main || main.style.opacity === '0') return;
 
             const seed = document.createElement('div');
             seed.classList.add('seed');
             
             const size = Math.random() * 4 + 2; 
             const leftPos = Math.random() * 100; 
-            const duration*
+            const duration = Math.random() * 15 + 15; 
+            const swayDuration = Math.random() * 3 + 2; 
+            
+            seed.style.width = `${size}px`;
+            seed.style.height = `${size}px`;
+            seed.style.left = `${leftPos}vw`;
+            seed.style.animationDuration = `${duration}s, ${swayDuration}s`;
+            
+            document.body.appendChild(seed);
+
+            setTimeout(() => {
+                if (seed && seed.parentNode) seed.remove();
+            }, duration * 1000);
+        }
+
+        setInterval(createSeed, 1200);
+    </script>
+</body>
+</html>
+
+
+
