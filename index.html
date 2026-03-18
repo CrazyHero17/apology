@@ -255,6 +255,498 @@
             font-size: 0.85rem;
             letter-spacing: 2px;
             text-transform: uppercase;
+            transition: opacity 0.5s ease, background 0.3s ease, color 0.3s ease;
+        }
+
+        .reveal-btn:hover {
+            background: var(--text-dark);
+            color: #fff;
+            border-color: var(--text-dark);
+        }
+
+        .hidden-message {
+            max-height: 0;
+            overflow: hidden;
+            opacity: 0;
+            transition: max-height 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94), opacity 1s ease 0.2s;
+            font-family: 'Lora', serif;
+            font-size: 1.2rem;
+            line-height: 1.9;
+            color: var(--text-dark);
+            margin-top: 1rem;
+            font-style: italic;
+        }
+
+        .hidden-message.show {
+            max-height: 500px; 
+            opacity: 1;
+        }
+
+        /* Floating Dandelion Seeds Animation (Swaying motion) */
+        .seed {
+            position: fixed;
+            bottom: -20px;
+            background-color: #fff;
+            border-radius: 50%;
+            pointer-events: none;
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
+            z-index: 0;
+            animation: floatUp linear forwards, sway ease-in-out infinite alternate;
+        }
+
+        @keyframes fadeIn {
+            to { opacity: 1; }
+        }
+
+        @keyframes floatUp {
+            0% { top: 110vh; opacity: 0; }
+            10% { opacity: 0.8; }
+            90% { opacity: 0.6; }
+            100% { top: -10vh; opacity: 0; }
+        }
+
+        @keyframes sway {
+            0% { transform: translateX(0px); }
+            100% { transform: translateX(30px); }
+        }
+
+        @media (max-width: 768px) {
+            .hero-title { font-size: 2.8rem; }
+            .stanza { font-size: 1.15rem; margin-bottom: 3.5rem; line-height: 2.2; }
+            .glass-card { margin: 1.5rem; padding: 3rem 1.5rem; border-radius: 16px; }
+            .welcome-text { font-size: 2rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- AUDIO PLAYER -->
+    <audio id="bg-music" loop>
+        <source src="song.mp3" type="audio/mpeg">
+    </audio>
+
+    <!-- 1. WELCOME SCREEN -->
+    <div id="welcome-screen">
+        <div class="welcome-text">A message for Ayen</div>
+        <button class="open-btn" id="openBtn">Open</button>
+    </div>
+
+    <!-- Backgrounds -->
+    <div class="background-wrapper"></div>
+    <div class="background-overlay"></div>
+
+    <!-- 2. MAIN CONTENT -->
+    <div id="main-content">
+        <!-- Floating Music Toggle Button -->
+        <div class="music-btn" id="musicToggle" title="Toggle Music">
+            <svg id="playIcon" viewBox="0 0 24 24" style="display: none;">
+                <path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z"/>
+            </svg>
+            <svg id="pauseIcon" viewBox="0 0 24 24">
+                <path d="M16.5 12c0-1.77-1.02-3.29-2.5-4.03v2.21l2.45 2.45c.03-.2.05-.41.05-.63zm2.5 0c0 .94-.2 1.82-.54 2.64l1.51 1.51C20.63 14.91 21 13.5 21 12c0-4.28-2.99-7.86-7-8.77v2.06c2.89.86 5 3.54 5 6.71zM4.27 3L3 4.27 7.73 9H3v6h4l5 5v-6.73l4.25 4.25c-.67.52-1.42.93-2.25 1.18v2.06c1.38-.31 2.63-.95 3.69-1.81L19.73 21 21 19.73l-9-9L4.27 3zM12 4L9.91 6.09 12 8.18V4z"/>
+            </svg>
+        </div>
+
+        <div class="container position-relative" style="z-index: 1;">
+            <div class="glass-card">
+                
+                <header class="hero-section fade-in-section">
+                    <svg class="floral-separator mb-4" viewBox="0 0 24 24" style="width: 50px; height: 50px;">
+                        <circle cx="12" cy="12" r="3" class="sunflower-svg"/>
+                        <path d="M12 2v3M12 19v3M2 12h3M19 12h3M4.9 4.9l2.1 2.1M17 17l2.1 2.1M4.9 19.1l2.1-2.1M17 7l2.1-2.1" class="sunflower-svg"/>
+                        <path d="M12 9a3 3 0 0 0-3 3M12 15a3 3 0 0 0 3-3" class="sunflower-svg" stroke-dasharray="2 2"/>
+                    </svg>
+                    <h1 class="hero-title">For Ayen</h1>
+                    <p class="hero-subtitle">A confession, an apology, and a promise.</p>
+                </header>
+
+                <main class="poem-container">
+                    
+                    <div class="stanza fade-in-section">
+                        <p>
+                            In every morning's dawn, you are the light,<br>
+                            My guiding dream throughout the darkest night.<br>
+                            Ayen, your beauty goes beyond the skin,<br>
+                            A steadfast heart, despite the wounds within.
+                        </p>
+                    </div>
+
+                    <div class="stanza fade-in-section">
+                        <p>
+                            You are complete, though you may stand alone,<br>
+                            You need nobody else, you hold your own.<br>
+                            So brave and strong, a beauty to behold,<br>
+                            One single smile brings peace, a joy untold.
+                        </p>
+                    </div>
+
+                    <svg class="floral-separator fade-in-section" viewBox="0 0 24 24">
+                        <circle cx="12" cy="12" r="3" class="sunflower-svg"/>
+                        <path d="M12 4c-1.5 0-2 2-2 3 0 1 2 2 2 2s2-1 2-2c0-1-.5-3-2-3z" class="sunflower-svg"/>
+                        <path d="M12 20c1.5 0 2-2 2-3 0-1-2-2-2-2s-2 1-2 2c0 1 .5 3 2 3z" class="sunflower-svg"/>
+                        <path d="M4 12c0 1.5 2 2 3 2 1 0 2-2 2-2s-1-2-2-2c-1 0-3 .5-3 2z" class="sunflower-svg"/>
+                        <path d="M20 12c0-1.5-2-2-3-2-1 0-2 2-2 2s1 2 2 2c1 0 3-.5 3-2z" class="sunflower-svg"/>
+                    </svg>
+
+                    <div class="stanza fade-in-section">
+                        <p>
+                            Like sunflowers standing so tall and so bright,<br>
+                            You bloom in my world with a warm, yellow light.<br>
+                            Yet free as a dandelion caught in the breeze,<br>
+                            A resilient beauty that puts me at ease.
+                        </p>
+                    </div>
+
+                    <div class="stanza fade-in-section">
+                        <p>
+                            But I fell short, and I have made mistakes,<br>
+                            I am the reason why your own heart aches.<br>
+                            For all the promises I failed to keep,<br>
+                            And leaving you alone to hurt and weep.
+                        </p>
+                    </div>
+
+                    <div class="stanza fade-in-section">
+                        <p>
+                            When you were angry, fear would make me hide,<br>
+                            Instead of standing firmly by your side.<br>
+                            I dragged our problems out, made healing slow,<br>
+                            When you just needed me to not let go.
+                        </p>
+                    </div>
+
+                    <svg class="floral-separator fade-in-section" viewBox="0 0 24 24">
+                        <path d="M12 14v8" class="dandelion-svg"/>
+                        <path d="M12 14c-2-3-4-5-6-7" class="dandelion-svg"/>
+                        <path d="M12 14c2-3 4-5 6-7" class="dandelion-svg"/>
+                        <path d="M12 14c0-4 0-8 0-11" class="dandelion-svg"/>
+                        <circle cx="6" cy="7" r="1" class="dandelion-svg"/>
+                        <circle cx="18" cy="7" r="1" class="dandelion-svg"/>
+                        <circle cx="12" cy="3" r="1" class="dandelion-svg"/>
+                        <path d="M16 4l-1 1M8 4l1 1" class="dandelion-svg"/>
+                    </svg>
+
+                    <div class="stanza fade-in-section">
+                        <p>
+                            Forgive me for the damage I have done,<br>
+                            For all your tears, I am the guilty one.<br>
+                            It's not your fault your heart has grown so tired,<br>
+                            A love like yours was meant to be admired.
+                        </p>
+                    </div>
+
+                    <div class="stanza fade-in-section">
+                        <p>
+                            I love you, not because you love me too,<br>
+                            But just because you are Ayen, so true.<br>
+                            If given one more chapter, a new start,<br>
+                            I'd prove that I can love with all my heart.
+                        </p>
+                    </div>
+
+                    <div class="stanza fade-in-section">
+                        <p>
+                            And if I am too late to make things right,<br>
+                            My admiration stays, a guiding light.<br>
+                            For once you graced my life, so real and true,<br>
+                            A perfect Ayen, loved completely through.
+                        </p>
+                    </div>
+
+                </main>
+
+                <div class="final-note-container fade-in-section">
+                    <button class="reveal-btn" id="revealBtn">One last thing</button>
+                    <div class="hidden-message" id="hiddenMessage">
+                        <p>"I am truly sorry for shutting down and not being there when you needed me the most. I meant every word of this poem. Take all the time you need. I'll be right here whenever you're ready to talk."</p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <!-- Scripts -->
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            
+            const welcomeScreen = document.getElementById('welcome-screen');
+            const mainContent = document.getElementById('main-content');
+            const openBtn = document.getElementById('openBtn');
+            const audio = document.getElementById("bg-music");
+            const musicBtn = document.getElementById("musicToggle");
+            const playIcon = document.getElementById("playIcon");
+            const pauseIcon = document.getElementById("pauseIcon");
+            
+            let isPlaying = false;
+            audio.volume = 0.5;
+
+            // 1. Handle Welcome Screen Click
+            openBtn.addEventListener('click', () => {
+                welcomeScreen.style.opacity = '0';
+                
+                setTimeout(() => {
+                    welcomeScreen.style.visibility = 'hidden';
+                    mainContent.style.visibility = 'visible';
+                    mainContent.style.opacity = '1';
+                    initScrollObserver();
+                }, 1000);
+
+                let playPromise = audio.play();
+                if (playPromise !== undefined) {
+                    playPromise.then(_ => {
+                        isPlaying = true;
+                        playIcon.style.display = "none"; // Hide "Play" icon
+                        pauseIcon.style.display = "block"; // Show "Pause" icon because it is playing
+                    }).catch(error => {
+                        console.log("Audio not found or blocked, continuing silently.");
+                        isPlaying = false;
+                        playIcon.style.display = "block"; // Show "Play" icon so they can click it later
+                        pauseIcon.style.display = "none";
+                    });
+                }
+            });
+
+            // 2. Manual Audio Toggle
+            musicBtn.addEventListener("click", function() {
+                if (isPlaying) {
+                    audio.pause();
+                    playIcon.style.display = "block";
+                    pauseIcon.style.display = "none";
+                } else {
+                    let playPromise = audio.play();
+                    if (playPromise !== undefined) {
+                        playPromise.then(_ => {
+                            playIcon.style.display = "none";
+                            pauseIcon.style.display = "block";
+                        }).catch(e => console.log("Still no audio found"));
+                    }
+                }
+                isPlaying = !isPlaying;
+            });
+
+            // 3. Fade-in Scroll Animation
+            function initScrollObserver() {
+                const observerOptions = {
+                    root: null,
+                    rootMargin: "0px",
+                    threshold: 0.15
+                };
+
+                const observer = new IntersectionObserver((entries, observer) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            entry.target.classList.add('visible');
+                            observer.unobserve(entry.target);
+                        }
+                    });
+                }, observerOptions);
+
+                const sections = document.querySelectorAll('.fade-in-section');
+                sections.forEach(section => {
+                    observer.observe(section);
+                });
+                
+                setTimeout(() => {
+                    document.querySelector('.hero-section').classList.add('visible');
+                }, 400);
+            }
+
+            // 4. Reveal Hidden Message Logic (Fixed Stuttering Issue)
+            const revealBtn = document.getElementById("revealBtn");
+            const hiddenMessage = document.getElementById("hiddenMessage");
+
+            revealBtn.addEventListener("click", function() {
+                // Open the hidden text
+                hiddenMessage.classList.add("show");
+                
+                // Make button invisible and unclickable, but keeps its physical space
+                revealBtn.style.opacity = "0"; 
+                revealBtn.style.pointerEvents = "none";
+                
+                // Wait for the text to finish expanding down (600ms), then smoothly scroll the page
+                setTimeout(() => {
+                    hiddenMessage.scrollIntoView({ behavior: 'smooth', block: 'end' });
+                }, 600);
+            });
+        });
+
+        // 5. Floating Dandelion Seeds Animation
+        function createSeed() {
+            if (document.getElementById('main-content').style.opacity === '0') return;
+
+            const seed = document.createElement('div');
+            seed.classList.add('seed');
+            
+            const size = Math.random() * 4 + 2; 
+            const leftPos = Math.random() * 100; 
+            const duration = Math.random() * 15 + 15; 
+            const swayDuration = Math.random() * 3 + 2; 
+            
+            seed.style.width = `${size}px`;
+            seed.style.height = `${size}px`;
+            seed.style.left = `${leftPos}vw`;
+            seed.style.animationDuration = `${duration}s, ${swayDuration}s`;
+            
+            document.body.appendChild(seed);
+
+            setTimeout(() => {
+                seed.remove();
+            }, duration * 1000);
+        }
+
+        setInterval(createSeed, 1000);
+    </script>
+</body>
+</html>
+
+
+            visibility: hidden;
+            transition: opacity 2s ease-in-out;
+            padding-bottom: 5rem;
+        }
+
+        /* Refined Premium Glass Card */
+        .glass-card {
+            background: rgba(255, 255, 255, 0.4);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.7);
+            border-radius: 24px;
+            padding: 5rem 3rem;
+            margin: 4rem auto;
+            max-width: 750px;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.05), inset 0 0 0 1px rgba(255,255,255,0.5);
+        }
+
+        .hero-section {
+            text-align: center;
+            padding-bottom: 4rem;
+        }
+
+        .hero-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 4rem;
+            font-weight: 600;
+            letter-spacing: 2px;
+            margin-bottom: 1rem;
+            color: var(--text-dark);
+        }
+
+        .hero-subtitle {
+            font-size: 1.1rem;
+            color: var(--text-muted);
+            font-style: italic;
+            font-family: 'Lora', serif;
+            letter-spacing: 1px;
+        }
+
+        .poem-container {
+            font-family: 'Lora', serif;
+        }
+
+        .stanza {
+            font-size: 1.3rem;
+            line-height: 2.4;
+            text-align: center;
+            margin-bottom: 4.5rem;
+            opacity: 0;
+            transform: translateY(40px);
+            transition: opacity 1.5s cubic-bezier(0.25, 0.46, 0.45, 0.94), transform 1.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        .stanza.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .floral-separator {
+            width: 45px;
+            height: 45px;
+            margin: 0 auto 4.5rem auto;
+            display: block;
+            opacity: 0.6;
+            transition: opacity 1.5s ease;
+        }
+
+        .floral-separator.visible {
+            opacity: 0.8;
+        }
+
+        .sunflower-svg, .dandelion-svg {
+            fill: none;
+            stroke: var(--primary-gold);
+            stroke-width: 1.5;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+        }
+        .dandelion-svg { stroke: var(--text-muted); }
+
+        /* Floating Music Toggle Button */
+        .music-btn {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 55px;
+            height: 55px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.9);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            z-index: 100;
+            transition: all 0.3s ease;
+        }
+
+        .music-btn:hover {
+            transform: scale(1.05);
+            background: rgba(255, 255, 255, 0.95);
+        }
+
+        .music-btn svg {
+            width: 22px;
+            height: 22px;
+            fill: var(--text-dark);
+            transition: all 0.3s ease;
+        }
+
+        /* Final Note Section */
+        .final-note-container {
+            text-align: center;
+            margin-top: 2rem;
+            padding-top: 4rem;
+            position: relative;
+        }
+
+        .final-note-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 50px;
+            height: 1px;
+            background: var(--primary-gold);
+            opacity: 0.5;
+        }
+
+        .reveal-btn {
+            background: transparent;
+            border: 1px solid var(--text-muted);
+            color: var(--text-dark);
+            padding: 12px 30px;
+            border-radius: 30px;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.85rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
             transition: all 0.4s ease;
         }
 
